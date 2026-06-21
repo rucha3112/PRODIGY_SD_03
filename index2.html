@@ -1,0 +1,269 @@
+<<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Management System</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f4f4f4;
+    margin:0;
+    padding:20px;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+
+h1{
+    text-align:center;
+    color:#333;
+}
+
+input{
+    padding:10px;
+    margin:5px;
+    width:28%;
+}
+
+button{
+    padding:10px 15px;
+    margin:5px;
+    cursor:pointer;
+    border:none;
+    border-radius:5px;
+}
+
+.add-btn{
+    background:#28a745;
+    color:white;
+}
+
+.edit-btn{
+    background:#ffc107;
+}
+
+.delete-btn{
+    background:#dc3545;
+    color:white;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+}
+
+th,td{
+    border:1px solid #ddd;
+    padding:10px;
+    text-align:center;
+}
+
+th{
+    background:#007bff;
+    color:white;
+}
+
+#search{
+    width:50%;
+    margin-top:15px;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<h1>Contact Management System</h1>
+
+<input type="text" id="name" placeholder="Enter Name">
+<input type="text" id="phone" placeholder="Enter Phone Number">
+<input type="email" id="email" placeholder="Enter Email">
+
+<button class="add-btn" onclick="addContact()">
+Add Contact
+</button>
+
+<br>
+
+<input
+type="text"
+id="search"
+placeholder="Search Contact"
+onkeyup="searchContact()">
+
+<table>
+
+<thead>
+<tr>
+<th>Name</th>
+<th>Phone</th>
+<th>Email</th>
+<th>Actions</th>
+</tr>
+</thead>
+
+<tbody id="contactList">
+
+</tbody>
+
+</table>
+
+</div>
+
+<script>
+
+let contacts = [];
+
+function addContact(){
+
+let name = document.getElementById("name").value;
+let phone = document.getElementById("phone").value;
+let email = document.getElementById("email").value;
+
+if(name === "" || phone === "" || email === ""){
+alert("Please fill all fields");
+return;
+}
+
+let contact = {
+name:name,
+phone:phone,
+email:email
+};
+
+contacts.push(contact);
+
+saveContacts();
+displayContacts();
+clearFields();
+}
+
+function displayContacts(){
+
+let list = document.getElementById("contactList");
+
+list.innerHTML = "";
+
+contacts.forEach((contact,index)=>{
+
+list.innerHTML += `
+<tr>
+<td>${contact.name}</td>
+<td>${contact.phone}</td>
+<td>${contact.email}</td>
+
+<td>
+
+<button
+class="edit-btn"
+onclick="editContact(${index})">
+Edit
+</button>
+
+<button
+class="delete-btn"
+onclick="deleteContact(${index})">
+Delete
+</button>
+
+</td>
+
+</tr>
+`;
+
+});
+}
+
+function deleteContact(index){
+
+contacts.splice(index,1);
+
+saveContacts();
+displayContacts();
+}
+
+function editContact(index){
+
+document.getElementById("name").value =
+contacts[index].name;
+
+document.getElementById("phone").value =
+contacts[index].phone;
+
+document.getElementById("email").value =
+contacts[index].email;
+
+deleteContact(index);
+}
+
+function clearFields(){
+
+document.getElementById("name").value = "";
+document.getElementById("phone").value = "";
+document.getElementById("email").value = "";
+}
+
+function saveContacts(){
+
+localStorage.setItem(
+"contacts",
+JSON.stringify(contacts)
+);
+}
+
+function loadContacts(){
+
+let storedContacts =
+localStorage.getItem("contacts");
+
+if(storedContacts){
+
+contacts =
+JSON.parse(storedContacts);
+
+displayContacts();
+}
+}
+
+function searchContact(){
+
+let searchValue =
+document.getElementById("search")
+.value.toLowerCase();
+
+let rows =
+document.querySelectorAll("#contactList tr");
+
+rows.forEach(row => {
+
+if(
+row.innerText.toLowerCase()
+.includes(searchValue)
+)
+{
+row.style.display = "";
+}
+else
+{
+row.style.display = "none";
+}
+
+});
+}
+
+loadContacts();
+
+</script>
+
+</body>
+</html>

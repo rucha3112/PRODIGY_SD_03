@@ -30,15 +30,18 @@ PRODIGY_SD_03
 Screenshots
 Home Page
 
-(Add screenshot here)
+<img width="1920" height="1200" alt="Screenshot (15)" src="https://github.com/user-attachments/assets/624bd26b-8e5a-4299-82e3-a9d71435582f" />
+
 
 Contact Added
 
-(Add screenshot here)
+<img width="1920" height="1200" alt="Screenshot (16)" src="https://github.com/user-attachments/assets/9142959d-a31a-403f-952f-522b498b2520" />
+
 
 Search Function
 
-(Add screenshot here)
+<img width="1920" height="1200" alt="Screenshot (17)" src="https://github.com/user-attachments/assets/d9920be2-127e-4711-b890-c98b64ecbefe" />
+
 
 Learning Outcomes
 Understanding DOM Manipulation
